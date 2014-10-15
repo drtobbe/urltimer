@@ -13,7 +13,7 @@ Download logstash binaries:
 	$ wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz
 	$ tar xvfz logstash-1.4.2.tar.gz
 
-Download and start urltimer binaries:
+Download, build and start urltimer binaries:
 
 	$ git clone https://github.com/drtobbe/urltimer.git
 	$ cd urltimer
