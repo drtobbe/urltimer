@@ -1,4 +1,31 @@
-urltimer
-========
+Apache Log UrlTimer
+===================
 
-Analyse your apache log-files to retrieve detailed bit-rate information per URL
+In order to get accurate bitrate information, change your apache Logformat to contain response-time: %D
+
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b %D" common
+
+Download logstash binaries:
+
+	$ mkdir -p /opt/urlanalysis
+	$ cd /opt/urlanalysis
+	$ wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz
+	$ tar xvfz logstash-1.4.2.tar.gz
+
+Download and start urltimer binaries:
+
+	$ git clone https://drtobbe@bitbucket.org/drtobbe/urltimer.git
+	$ cd urltimer
+	$ mvn package
+	$ cd target
+	$ nohup java -jar urltimer.war &
+	$ open http://localhost:8181/urltimer/info
+
+Configure apache logfile path in logstash.conf and start logstash:
+		
+	$ cd /opt/urlanalysis
+	$ vim ./urltimer/logstash/combined-apache-logstash-time.conf
+	$ ./logstash-1.4.2/bin/logstash -f urltimer/logstash/combined-apache-logstash-time.conf -t
+	$ nohup ./logstash-1.4.2/bin/logstash -f urltimer/logstash/combined-apache-logstash-time.conf &
+
