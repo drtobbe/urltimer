@@ -6,7 +6,7 @@ In order to get accurate bitrate information, change apache LogFormat to contain
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" combined
     LogFormat "%h %l %u %t \"%r\" %>s %b %D" common
 
-Download, build and start urltimer binaries:
+Download, build and start urltimer:
 
 	$ mkdir -p /opt/urlanalysis
 	$ cd /opt/urlanalysis
