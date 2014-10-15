@@ -1,7 +1,7 @@
 Apache Log UrlTimer
 ===================
 
-In order to get accurate bitrate information, change your apache Logformat to contain response-time: %D
+In order to get accurate bitrate information, change apache Logformat to contain response-time: %D
 
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" combined
     LogFormat "%h %l %u %t \"%r\" %>s %b %D" common
@@ -15,7 +15,7 @@ Download logstash binaries:
 
 Download and start urltimer binaries:
 
-	$ git clone https://drtobbe@bitbucket.org/drtobbe/urltimer.git
+	$ git clone https://github.com/drtobbe/urltimer.git
 	$ cd urltimer
 	$ mvn package
 	$ cd target
@@ -25,7 +25,7 @@ Download and start urltimer binaries:
 Configure apache logfile path in logstash.conf and start logstash:
 		
 	$ cd /opt/urlanalysis
-	$ vim ./urltimer/logstash/combined-apache-logstash-time.conf
-	$ ./logstash-1.4.2/bin/logstash -f urltimer/logstash/combined-apache-logstash-time.conf -t
-	$ nohup ./logstash-1.4.2/bin/logstash -f urltimer/logstash/combined-apache-logstash-time.conf &
+	$ vim ./urltimer/logstash/common-time-logstash.conf
+	$ ./logstash-1.4.2/bin/logstash -f urltimer/logstash/common-time-logstash.conf -t
+	$ nohup ./logstash-1.4.2/bin/logstash -f urltimer/logstash/common-time-logstash.conf &
 
