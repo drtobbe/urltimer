@@ -1,7 +1,7 @@
 Apache Log UrlTimer
 ===================
 
-In order to get accurate bitrate information, change apache Logformat to contain response-time: %D
+In order to get accurate bitrate information, change apache LogFormat to contain response-time: %D
 
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" combined
     LogFormat "%h %l %u %t \"%r\" %>s %b %D" common
