@@ -265,11 +265,11 @@ public abstract class AbstractTimerInfoStats implements Serializable {
      * @return rtimes
      */
     public long[] getResponseTimes() {
-        logger.info("--");
+        logger.debug("--");
         double mean = getStatData().get(TOTAL).getMeanTime();
-        logger.info("times: " + mean);
+        logger.debug("times: " + mean);
         double std = getStatData().get(TOTAL).getTimeStandardDeviation();
-        logger.info("std: " + std);
+        logger.debug("std: " + std);
         return getNormalizedArray(rtimes, pp);
     }
 
@@ -365,10 +365,10 @@ public abstract class AbstractTimerInfoStats implements Serializable {
      */
     public long[] getRatesSizes() {
         double mean = getStatData().get(TOTAL).getMeanRate();
-        logger.info("--");
-        logger.info("rates: " + mean);
+        logger.debug("--");
+        logger.debug("rates: " + mean);
         double std = getStatData().get(TOTAL).getRateStandardDeviation();
-        logger.info("std: " + std);
+        logger.debug("std: " + std);
         return getNormalizedArray(rates, pp);
     }
 
@@ -382,16 +382,16 @@ public abstract class AbstractTimerInfoStats implements Serializable {
 
     private long[] getNormalizedArray(int[] array, int percent) {
         int width = getArrayPercent(array, percent);
-        logger.info("width: " + width);
+        logger.debug("width: " + width);
         int compress = Math.max(1, Math.round(width / TIME_SIZE));
-        logger.info("compress1: " + compress);
+        logger.debug("compress1: " + compress);
         int[] compressed = compressArray(array, compress);
         //
         // Shift to the median
         int shift = Math.max(0, (int) getArrayMedianM1(compressed) - TIME_SIZE / 2);
         shift = Math.min(shift, compressed.length - TIME_SIZE - 1);
         shift = 0;
-        logger.info("shift: " + shift);
+        logger.debug("shift: " + shift);
         long ymax = getArrayMax(compressed);
         long[] normed = new long[TIME_SIZE];
         for (int i = 0; i < TIME_SIZE; i++) {
@@ -403,9 +403,9 @@ public abstract class AbstractTimerInfoStats implements Serializable {
     private int[] compressArray(int[] array, int compress) {
         int newlen = array.length / compress;
         newlen = Math.max(newlen, TIME_SIZE + 1);
-        logger.info("newlen: " + newlen);
+        logger.debug("newlen: " + newlen);
         compress = array.length / newlen;
-        logger.info("compress2: " + compress);
+        logger.debug("compress2: " + compress);
         int[] compressed = new int[newlen];
         for (int i = 0; i < newlen; i++) {
             for (int j = 0; j < compress; j++) {
