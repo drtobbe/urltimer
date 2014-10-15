@@ -319,11 +319,11 @@ public abstract class AbstractTimerInfoStats implements Serializable {
      * @return rtimes
      */
     public long[] getChunkSizes() {
-        logger.info("--");
+        logger.debug("--");
         double mean = getStatData().get(TOTAL).getMeanBytes();
-        logger.info("bytes: " + mean);
+        logger.debug("bytes: " + mean);
         double std = getStatData().get(TOTAL).getBytesStandardDeviation();
-        logger.info("std: " + std);
+        logger.debug("std: " + std);
         return getNormalizedArray(chunks, pp);
     }
 
