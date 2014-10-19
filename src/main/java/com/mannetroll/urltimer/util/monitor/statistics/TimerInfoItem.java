@@ -37,7 +37,7 @@ public class TimerInfoItem {
         long diff = now - this.lastTime;
         if (diff > 0) {
             frequency += diff;
-            frequency2 += frequency * frequency;
+            frequency2 += diff * diff;
             minFrequency = Math.min(minFrequency, diff);
             maxFrequency = Math.max(maxFrequency, diff);
         }
