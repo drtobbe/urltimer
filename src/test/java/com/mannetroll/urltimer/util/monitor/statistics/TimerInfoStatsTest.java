@@ -1,4 +1,4 @@
-package se.posten.cint.util.monitor.statistics;
+package com.mannetroll.urltimer.util.monitor.statistics;
 
 import java.util.Random;
 
