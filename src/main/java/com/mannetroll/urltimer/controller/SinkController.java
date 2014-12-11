@@ -38,6 +38,9 @@ public class SinkController {
             Map map = call.toMap();
             //
             String request = (String) map.get("request");
+            if (request == null) {
+                request = "-";
+            }
             String response = (String) map.get("response");
             String verb = (String) map.get("verb");
             Integer responsetime = (Integer) map.get("responsetime_ms");
