@@ -1,0 +1,23 @@
+{
+    "message": "127.0.0.1 - - [11/Dec/2014:12:36:43 +0100] \"GET /Rest/Information/Pub/BusinessLocation/ServicePointService_v0100/BusinessLocationLocator/Logistics/ServicePointService_1.0/findByPostalCode.json?consumerId=164f93f7-e036-47e5-8379-867e922e062a&countryCode=SE&postalCode=41666 HTTP/1.1\" 200 1170 176905",
+    "@version": "1",
+    "@timestamp": "2014-12-11T11:36:43.000Z",
+    "type": "apache_access",
+    "host": "lxcgwa502.postdk.net",
+    "path": "/cint/local/log/tibco/cintgw/apache/httpd/asg_prod_internal_http_access_log.2014-12-11-00_00_00",
+    "clientip": "127.0.0.1",
+    "ident": "-",
+    "auth": "-",
+    "timestamp": "11/Dec/2014:12:36:43 +0100",
+    "verb": "GET",
+    "concern": "Rest",
+    "affinity": "Information",
+    "authtype": "Pub",
+    "context": "BusinessLocation",
+    "service": "ServicePointService",
+    "version": "v0100",
+    "httpversion": "1.1",
+    "response": "200",
+    "bytes": "1170",
+    "responsetime_ms": 176905
+}

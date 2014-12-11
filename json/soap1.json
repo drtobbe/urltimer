@@ -1,0 +1,23 @@
+{
+    "message": "172.20.0.37 - moss [11/Dec/2014:12:32:23 +0100] \"POST /Soap/Partner/Ba/Logistics/TrackandtraceService_v0101 HTTP/1.1\" 200 4488 575651",
+    "@version": "1",
+    "@timestamp": "2014-12-11T11:32:23.000Z",
+    "type": "apache_access",
+    "host": "lxcgwc501.webmgmtpdk.net",
+    "path": "/cint/local/log/tibco/cintgw/apache/httpd/asg_prod_dmz_http_access_log.2014-12-11-00_00_00",
+    "clientip": "172.20.0.37",
+    "ident": "-",
+    "auth": "moss",
+    "timestamp": "11/Dec/2014:12:32:23 +0100",
+    "verb": "POST",
+    "concern": "Soap",
+    "affinity": "Partner",
+    "authtype": "Ba",
+    "context": "Logistics",
+    "service": "TrackandtraceService",
+    "version": "v0101",
+    "httpversion": "1.1",
+    "response": "200",
+    "bytes": "4488",
+    "responsetime_ms": 575651
+  }
