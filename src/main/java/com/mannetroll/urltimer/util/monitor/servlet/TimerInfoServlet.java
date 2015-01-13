@@ -31,7 +31,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 public class TimerInfoServlet extends HttpServlet {
     private static final String E = "";
     private static final long serialVersionUID = 1L;
-    private static TimerInfoStats tistat = TimerInfoStats.getInstance();
+    private static TimerInfoStats tistat = TimerInfoStats.getInstance("UrlTimer");
     private static final String NAME = tistat.getName();
     private static long serverStart = tistat.getServerStart();
 

@@ -46,7 +46,7 @@ public class TimerInfoItem {
             totalBytes2 += chunk * chunk;
             minBytes = Math.min(minBytes, chunk);
             maxBytes = Math.max(maxBytes, chunk);
-            double rate = (timeSlice > 0 ? chunk / (timeSlice / 1000) : 0D);
+            double rate = (timeSlice > 0 ? (1000D * Double.valueOf(chunk) / timeSlice) : 0D);
             totalRate += rate;
             totalRate2 += rate * rate;
             minRate = Math.min(minRate, rate);

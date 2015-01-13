@@ -24,7 +24,7 @@ import com.mongodb.BasicDBObject;
 @RequestMapping("/sink")
 public class SinkController {
     private final static Logger logger = LoggerFactory.getLogger(SinkController.class);
-    private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
+    private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z");
     private final static Integer ZERO = Integer.valueOf(0);
     private final static Integer KILO = Integer.valueOf(1000);
@@ -47,7 +47,8 @@ public class SinkController {
             if (responsetime == null) {
                 responsetime = SinkController.KILO;
             }
-            Integer responsetime_ms = responsetime / 1000;
+            Integer responsetime_ms = ((Integer) map.get("responsetime_ms"));
+            double timeSlice = Double.valueOf(responsetime_ms) / 1000D;
             Integer bytes = getBytes(map.get("bytes"));
             //
             String timestamp = (String) map.get("timestamp");
@@ -65,8 +66,8 @@ public class SinkController {
             if (logger.isDebugEnabled()) {
                 logger.debug("key: " + key);
             }
-            statistics.addCall(key, responsetime_ms, bytes, now);
-            statistics.addTotalTime(responsetime_ms, bytes, now);
+            statistics.addCall(key, timeSlice, bytes, now);
+            statistics.addTotalTime(timeSlice, bytes, now);
             statistics.addStatusCode(response);
         } catch (Exception e) {
             logger.error("body: " + body, e);
