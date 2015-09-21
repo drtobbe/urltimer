@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author drtobbe
+ */
 public class MessageParser {
     private final static Logger logger = LoggerFactory.getLogger(MessageParser.class);
     private static Pattern accessLogPattern = Pattern.compile(getAccessLogRegex(), Pattern.CASE_INSENSITIVE

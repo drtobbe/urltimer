@@ -15,27 +15,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mannetroll.urltimer.util.monitor.statistics.AbstractTimerInfoStats;
 import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
-import com.mongodb.BasicDBObject;
 
 /**
  * @author drtobbe
  */
 @Controller
-@RequestMapping("/sink")
 public class SinkController {
     private final static Logger logger = LoggerFactory.getLogger(SinkController.class);
     private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z");
     private final static Integer ZERO = Integer.valueOf(0);
-    private final static Integer KILO = Integer.valueOf(1000);
+    private static final char SEP = '|';
 
-    @RequestMapping(value = "/json", method = RequestMethod.POST, headers = "Accept=application/json;charset=utf-8")
+    @RequestMapping(value = "/jsonsink", method = RequestMethod.POST, headers = "Accept=application/json;charset=utf-8")
     @ResponseBody
-    public String register(@RequestBody String body) {
+    public String register(@RequestBody Map<String, Object> map) {
         try {
-            BasicDBObject call = (BasicDBObject) com.mongodb.util.JSON.parse(body);
-            @SuppressWarnings("rawtypes")
-            Map map = call.toMap();
             //
             String request = (String) map.get("request");
             if (request == null) {
@@ -43,12 +38,11 @@ public class SinkController {
             }
             String response = (String) map.get("response");
             String verb = (String) map.get("verb");
-            Integer responsetime = (Integer) map.get("responsetime_ms");
-            if (responsetime == null) {
-                responsetime = SinkController.KILO;
+            Integer responsetime = ((Integer) map.get("responsetime_ms"));
+            double timeSlice = 0D;
+            if (responsetime != null) {
+                timeSlice = Double.valueOf(responsetime) / 1000D;
             }
-            Integer responsetime_ms = ((Integer) map.get("responsetime_ms"));
-            double timeSlice = Double.valueOf(responsetime_ms) / 1000D;
             Integer bytes = getBytes(map.get("bytes"));
             //
             String timestamp = (String) map.get("timestamp");
@@ -60,9 +54,9 @@ public class SinkController {
                     request = request.substring(0, indexOf);
                 }
             }
-            request = request.replace('?', '|');
-            request = request.replace('&', '|');
-            String key = verb + "|" + response + "|" + request;
+            request = request.replace('?', SEP);
+            request = request.replace('&', SEP);
+            String key = verb + SEP + response + SEP + request;
             if (logger.isDebugEnabled()) {
                 logger.debug("key: " + key);
             }
@@ -70,7 +64,7 @@ public class SinkController {
             statistics.addTotalTime(timeSlice, bytes, now);
             statistics.addStatusCode(response);
         } catch (Exception e) {
-            logger.error("body: " + body, e);
+            logger.error("body: " + map, e);
         }
         return "";
     }
@@ -93,5 +87,6 @@ public class SinkController {
             return System.currentTimeMillis();
         }
     }
+
 
 }

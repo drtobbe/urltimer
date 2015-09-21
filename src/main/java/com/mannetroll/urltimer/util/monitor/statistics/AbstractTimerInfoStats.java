@@ -150,15 +150,21 @@ public abstract class AbstractTimerInfoStats implements Serializable {
      */
     public synchronized void clear() {
         memoryInfo.clear();
+        base.clear();
         calls.clear();
-        base = new HashMap<String, TimerInfoItem>();
         calls = Collections.synchronizedMap(base);
         calls.put(TOTAL, new TimerInfoItem(TOTAL));
         createTime = 0;
         lastTime = createTime;
-        rtimes = new int[RESP_SIZE];
-        chunks = new int[CHUNK_SIZE];
-        rates = new int[RATE_SIZE];
+        for (int i = 0; i < RESP_SIZE; i++) {
+            rtimes[i] = 0;            
+        }
+        for (int i = 0; i < CHUNK_SIZE; i++) {
+            chunks[i] = 0;            
+        }
+        for (int i = 0; i < RATE_SIZE; i++) {
+            rates[i] = 0;            
+        }
         notModified = 0;
         etagCached = 0;
         rendered = 0;
@@ -342,7 +348,7 @@ public abstract class AbstractTimerInfoStats implements Serializable {
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final int RATE_SIZE = 50 * 1024 * 1024; // collect values upto 50 MB/s, takes 200MB RAM
+    private final int RATE_SIZE = 20 * 1024 * 1024; // collect values upto 20 MB/s, takes 100MB RAM
     private final int RATE_SIZEM1 = RATE_SIZE - 1;
     private int[] rates = new int[RATE_SIZE];
 

@@ -20,8 +20,11 @@ import org.slf4j.LoggerFactory;
 import com.mannetroll.urltimer.util.monitor.statistics.AbstractTimerInfoStats;
 import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 
-public class LogParser {
-    private final static Logger logger = LoggerFactory.getLogger(LogParser.class);
+/**
+ * @author drtobbe
+ */
+public class FileLogParser {
+    private final static Logger logger = LoggerFactory.getLogger(FileLogParser.class);
     private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
     private static final String UTF_8 = "UTF-8";
     private static final String SEP = "|";
@@ -35,7 +38,7 @@ public class LogParser {
     String numOfBytes = null;
     String responseTime = null;
 
-    public LogParser() {
+    public FileLogParser() {
     }
 
     /**

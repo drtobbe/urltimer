@@ -8,12 +8,15 @@ import org.slf4j.LoggerFactory;
 
 import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 
+/**
+ * @author drtobbe
+ */
 public class LogParserTest {
     private final static Logger logger = LoggerFactory.getLogger(LogParserTest.class);
 
     @Test
     public void test() {
-        LogParser logParser = new LogParser();
+        FileLogParser logParser = new FileLogParser();
         File file = new File("src/test/resources/test.log");
         logParser.parse(file);
         logger.info("avg: " + TimerInfoStats.getInstance("UrlTimer").getAverage());
