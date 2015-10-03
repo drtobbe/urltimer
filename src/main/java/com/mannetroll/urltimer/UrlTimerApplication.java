@@ -10,6 +10,8 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.mannetroll.urltimer.tail.ApacheLogTailer;
+import com.mannetroll.urltimer.tail.SquidLogTailer;
 import com.mannetroll.urltimer.util.monitor.statistics.AbstractTimerInfoStats;
 import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 
@@ -36,7 +38,16 @@ public class UrlTimerApplication extends SpringBootServletInitializer {
                 fakeCall("GET|200|FAKE3");
             }
         }
+
         SpringApplication.run(UrlTimerApplication.class, args);
+
+        if (System.getenv(SquidLogTailer.SQUID_LOGTAILER_FILENAME) != null) {
+            (new SquidLogTailer()).start();
+        }
+        if (System.getenv(ApacheLogTailer.APACHE_LOGTAILER_FILENAME) != null) {
+            (new ApacheLogTailer()).start();
+        }
+
         logger.info("Done");
     }
 

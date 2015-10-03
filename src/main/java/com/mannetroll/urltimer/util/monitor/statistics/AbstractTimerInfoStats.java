@@ -157,13 +157,13 @@ public abstract class AbstractTimerInfoStats implements Serializable {
         createTime = 0;
         lastTime = createTime;
         for (int i = 0; i < RESP_SIZE; i++) {
-            rtimes[i] = 0;            
+            rtimes[i] = 0;
         }
         for (int i = 0; i < CHUNK_SIZE; i++) {
-            chunks[i] = 0;            
+            chunks[i] = 0;
         }
         for (int i = 0; i < RATE_SIZE; i++) {
-            rates[i] = 0;            
+            rates[i] = 0;
         }
         notModified = 0;
         etagCached = 0;
@@ -594,13 +594,13 @@ public abstract class AbstractTimerInfoStats implements Serializable {
     }
 
     public void addStatusCode(String response) {
-        if ("200".equalsIgnoreCase(response)) {
+        if (response != null && response.startsWith("2")) {
             add200OK();
-        } else if (response != null && response.startsWith("50")) {
+        } else if (response != null && response.startsWith("5")) {
             add50X();
-        } else if (response != null && response.startsWith("40")) {
+        } else if (response != null && response.startsWith("4")) {
             add40X();
-        } else if (response != null && response.startsWith("30")) {
+        } else if (response != null && response.startsWith("3")) {
             add30X();
         }
     }

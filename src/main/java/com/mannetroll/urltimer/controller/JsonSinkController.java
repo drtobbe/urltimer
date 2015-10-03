@@ -20,10 +20,10 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
  * @author drtobbe
  */
 @Controller
-public class SinkController {
-    private final static Logger logger = LoggerFactory.getLogger(SinkController.class);
+public class JsonSinkController {
+    private final static Logger logger = LoggerFactory.getLogger(JsonSinkController.class);
     private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z");
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private final static Integer ZERO = Integer.valueOf(0);
     private static final char SEP = '|';
 
@@ -36,16 +36,16 @@ public class SinkController {
             if (request == null) {
                 request = "-";
             }
-            String response = (String) map.get("response");
+            Object response = map.get("response");
             String verb = (String) map.get("verb");
             Integer responsetime = ((Integer) map.get("responsetime_ms"));
             double timeSlice = 0D;
             if (responsetime != null) {
-                timeSlice = Double.valueOf(responsetime) / 1000D;
+                timeSlice = Double.valueOf(responsetime);
             }
             Integer bytes = getBytes(map.get("bytes"));
             //
-            String timestamp = (String) map.get("timestamp");
+            String timestamp = (String) map.get("@timestamp");
             long now = getNow(timestamp);
             //
             if (!statistics.isAddQueryToKey()) {
@@ -62,7 +62,9 @@ public class SinkController {
             }
             statistics.addCall(key, timeSlice, bytes, now);
             statistics.addTotalTime(timeSlice, bytes, now);
-            statistics.addStatusCode(response);
+            if (response != null) {
+                statistics.addStatusCode(response.toString());                
+            }
         } catch (Exception e) {
             logger.error("body: " + map, e);
         }
@@ -70,7 +72,7 @@ public class SinkController {
     }
 
     private Integer getBytes(Object object) {
-        Integer bytes = SinkController.ZERO;
+        Integer bytes = JsonSinkController.ZERO;
         if (object instanceof Integer) {
             bytes = (Integer) object;
         } else if (object != null) {
@@ -87,6 +89,5 @@ public class SinkController {
             return System.currentTimeMillis();
         }
     }
-
 
 }
