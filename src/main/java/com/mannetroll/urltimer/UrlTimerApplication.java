@@ -23,7 +23,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 @ComponentScan
 public class UrlTimerApplication extends SpringBootServletInitializer {
     private final static Logger logger = LoggerFactory.getLogger(UrlTimerApplication.class);
-    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
+    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
     private final static Random randomGenerator = new Random();
 
     public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class UrlTimerApplication extends SpringBootServletInitializer {
             (new ApacheLogTailer()).start();
         }
 
-        logger.info("Done");
+        logger.info("open http://localhost:8181/urltimer/info");
     }
 
     private static void sleep(int millis) {

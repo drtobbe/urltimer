@@ -19,8 +19,8 @@ public class LogParserTest {
         FileLogParser logParser = new FileLogParser();
         File file = new File("src/test/resources/test.log");
         logParser.parse(file);
-        logger.info("avg: " + TimerInfoStats.getInstance("UrlTimer").getAverage());
-        TimerInfoStats.getInstance("UrlTimer").clear();
+        logger.info("avg: " + TimerInfoStats.getInstance().getAverage());
+        TimerInfoStats.getInstance().clear();
     }
 
 }

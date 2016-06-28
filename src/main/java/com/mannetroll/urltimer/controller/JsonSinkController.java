@@ -22,7 +22,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
 @Controller
 public class JsonSinkController {
     private final static Logger logger = LoggerFactory.getLogger(JsonSinkController.class);
-    private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
+    private final AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private final static Integer ZERO = Integer.valueOf(0);
     private static final char SEP = '|';

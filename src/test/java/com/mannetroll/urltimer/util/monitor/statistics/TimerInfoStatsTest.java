@@ -12,7 +12,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
  * @author drtobbe
  */
 public class TimerInfoStatsTest {
-    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
+    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
     private final static Random randomGenerator = new Random();
 
     @Test

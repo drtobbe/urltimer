@@ -18,7 +18,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
  */
 public class ApacheLogParser implements LogParser {
     private final static Logger logger = LoggerFactory.getLogger(ApacheLogParser.class);
-    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
+    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
     private static final char SEP = '|';
     private static long index = 0L;
     private static long start = System.currentTimeMillis();

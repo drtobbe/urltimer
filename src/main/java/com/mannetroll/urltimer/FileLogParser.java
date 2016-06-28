@@ -25,7 +25,7 @@ import com.mannetroll.urltimer.util.monitor.statistics.TimerInfoStats;
  */
 public class FileLogParser {
     private final static Logger logger = LoggerFactory.getLogger(FileLogParser.class);
-    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance("UrlTimer");
+    private final static AbstractTimerInfoStats statistics = TimerInfoStats.getInstance();
     private static final String UTF_8 = "UTF-8";
     private static final String SEP = "|";
     SimpleDateFormat accesslogDateFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z");
