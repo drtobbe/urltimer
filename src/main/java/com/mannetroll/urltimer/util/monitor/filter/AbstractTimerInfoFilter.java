@@ -28,7 +28,6 @@ public abstract class AbstractTimerInfoFilter implements Filter {
     private static final String BR = " <br> ";
     private final AbstractTimerInfoStats statistics;
     private final String name;
-    private static final String ETAGCACHE = "EtagCache";
 
     /**
      * Default constructor
@@ -46,15 +45,13 @@ public abstract class AbstractTimerInfoFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         StringBuffer sb = new StringBuffer();
-        if (logger.isInfoEnabled()) {
+        if (logger.isDebugEnabled()) {
             sb.append("################################################################### " + name).append(NL);
             sb.append((calls++) + ": Request: " + getUrl(request)).append(NL);
         }
         long start = System.currentTimeMillis();
         StatusHttpServletResponseWrapper responseWrapper = new StatusHttpServletResponseWrapper(response);
         try {
-            addIpToResponse(responseWrapper);
-            // Do Filter Chain
             filterChain.doFilter(servletRequest, responseWrapper);
         } catch (ServletException e) {
             String msg = "X-ServletException: ";
@@ -88,32 +85,16 @@ public abstract class AbstractTimerInfoFilter implements Filter {
         long now = System.currentTimeMillis();
         statistics.addCall(key, filterTime, now);
         statistics.addTotalTime(filterTime, 0, now);
-        if (logger.isInfoEnabled()) {
+        if (logger.isDebugEnabled()) {
             sb.append("key: " + key).append(NL);
             sb.append("elapsed: " + filterTime).append(NL);
-            logger.info(sb.toString());
+            logger.debug(sb.toString());
         }
         if (key.startsWith("304")) {
             statistics.addNotModified();
         }
-        if (key.startsWith("200C")) {
-            statistics.addEtagCached();
-        }
-        if (key.startsWith("200R")) {
+        if (key.startsWith("200")) {
             statistics.addRendered();
-        }
-    }
-
-    private void addIpToResponse(HttpServletResponse response) {
-        response.setHeader("X-SEMC-HOST-NAME", getHostName());
-    }
-
-    private String getHostName() {
-        try {
-            return java.net.InetAddress.getLocalHost().getHostName();
-        } catch (Throwable th) {
-            // Akamai EdgeJava will throw exception, with IP as message
-            return th.getMessage();
         }
     }
 
@@ -154,15 +135,11 @@ public abstract class AbstractTimerInfoFilter implements Filter {
 
     private static class StatusHttpServletResponseWrapper extends HttpServletResponseWrapper {
         private int status;
-        private String etagcache = "";
         public StatusHttpServletResponseWrapper(HttpServletResponse response) {
             super(response);
         }
         @Override
         public void setHeader(String name, String value) {
-            if (ETAGCACHE.equalsIgnoreCase(name)) {
-                etagcache = value;
-            }
             super.setHeader(name, value);
         }
         @Override
